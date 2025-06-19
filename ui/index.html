@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI WebSocket Test Client</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>FastAPI WebSocket Test Client</h1>
+            <div class="architecture-image">
+                <img src="https://pplx-res.cloudinary.com/image/upload/v1750347810/pplx_code_interpreter/8a52e804_of1cht.jpg" alt="FastAPI WebSocket Architecture" />
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Authentication Section -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>Authentication</h2>
+                </div>
+                <div class="card__body">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" class="form-control" value="demo" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" class="form-control" value="password" placeholder="Enter password">
+                    </div>
+                    <button id="loginBtn" class="btn btn--primary">Login</button>
+                    <div id="authStatus" class="auth-status"></div>
+                </div>
+            </section>
+
+            <!-- Connection Section -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>WebSocket Connection</h2>
+                </div>
+                <div class="card__body">
+                    <div class="form-group">
+                        <label class="form-label" for="wsUrl">WebSocket URL</label>
+                        <input type="text" id="wsUrl" class="form-control" value="ws://localhost:8000/ws" placeholder="WebSocket URL">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="jwtToken">JWT Token</label>
+                        <input type="text" id="jwtToken" class="form-control" placeholder="JWT Token (obtained from login)" readonly>
+                    </div>
+                    <button id="connectBtn" class="btn btn--primary">Connect</button>
+                    <button id="disconnectBtn" class="btn btn--secondary" disabled>Disconnect</button>
+                    <div id="connectionStatus" class="connection-status">
+                        <div class="status-indicator">
+                            <span class="status-dot disconnected"></span>
+                            <span>Disconnected</span>
+                        </div>
+                        <div class="connection-stats">
+                            <div>Messages Sent: <span id="messagesSent">0</span></div>
+                            <div>Messages Received: <span id="messagesReceived">0</span></div>
+                            <div>Last Heartbeat: <span id="lastHeartbeat">Never</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Channel Management -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>Channel Management</h2>
+                </div>
+                <div class="card__body">
+                    <div class="form-group">
+                        <label class="form-label" for="channelInput">Channel Name</label>
+                        <input type="text" id="channelInput" class="form-control" placeholder="Enter channel name">
+                    </div>
+                    <div class="channel-buttons">
+                        <button id="joinChannelBtn" class="btn btn--primary">Join Channel</button>
+                        <button id="leaveChannelBtn" class="btn btn--secondary">Leave Channel</button>
+                    </div>
+                    <div class="joined-channels">
+                        <h3>Joined Channels</h3>
+                        <div id="channelsList" class="channels-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Message Interface -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>Send Message</h2>
+                </div>
+                <div class="card__body">
+                    <div class="form-group">
+                        <label class="form-label" for="messageChannel">Target Channel</label>
+                        <select id="messageChannel" class="form-control">
+                            <option value="">Select channel...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="messageText">Message</label>
+                        <textarea id="messageText" class="form-control" rows="3" placeholder="Enter your message..."></textarea>
+                    </div>
+                    <button id="sendMessageBtn" class="btn btn--primary" disabled>Send Message</button>
+                </div>
+            </section>
+
+            <!-- Message Log -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>Message Log</h2>
+                    <button id="clearLogBtn" class="btn btn--sm btn--secondary">Clear Log</button>
+                </div>
+                <div class="card__body">
+                    <div id="messageLog" class="message-log"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
