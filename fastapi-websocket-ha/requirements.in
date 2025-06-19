@@ -1,0 +1,12 @@
+fastapi[all]
+uvicorn[standard]
+redis
+python-jose[cryptography]
+python-multipart
+pydantic
+pydantic-settings
+pytest
+pytest-asyncio
+httpx
+websockets
+gunicorn
