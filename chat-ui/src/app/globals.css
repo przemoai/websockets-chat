@@ -1,0 +1,11 @@
+@import '../../../chat-ui/public/style.css';
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.architecture-image {
+  display: flex;
+  justify-content: center;
+}
