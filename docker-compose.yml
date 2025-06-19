@@ -27,7 +27,8 @@ services:
     ports:
       - "26379:26379"
     volumes:
-      - ./sentinel.conf:/etc/redis/sentinel.conf
+      - ./redis/sentinel.conf:/etc/redis/sentinel.conf
+      - redis_insight:/data
     command: >
       sh -c "
       until redis-cli -h redis -p 6379 ping; do
@@ -116,9 +117,9 @@ services:
 
 volumes:
   redis_data:
+  redis_insight:
   prometheus_data:
   grafana_data:
-  redis_insight:
 
 networks:
   default:
