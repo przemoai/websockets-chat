@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.logger import logger
-from app.middleware.prometheus import PrometheusMiddleware, metrics_endpoint
+#from app.middleware.prometheus import PrometheusMiddleware, metrics_endpoint
 from app.routers import auth_router, websocket_router
 from app.routers.websocket import initialize_manager, shutdown_manager
 from app.services.redis_client import redis_client
@@ -55,13 +55,13 @@ app.add_middleware(
 )
 
 # TODO: Add Prometheus middleware
-app.add_middleware(PrometheusMiddleware)
+#app.add_middleware(PrometheusMiddleware)
 
 app.include_router(auth_router)
 app.include_router(websocket_router)
 
 
-app.get("/metrics")(metrics_endpoint)
+#app.get("/metrics")(metrics_endpoint)
 
 
 @app.get("")

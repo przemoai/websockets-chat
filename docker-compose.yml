@@ -46,29 +46,45 @@ services:
     volumes:
       - redis_insight:/data
 
+  app:
+    build: .
+    container_name: fastapi-ws-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET_KEY=your-production-secret-key
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./app:/app/app:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
+  chat-ui:
+    build: ./chat-ui
+    container_name: chat-ui-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - app
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-#  app:
-#    build: .
-#    container_name: fastapi-ws-app
-#    restart: unless-stopped
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      redis:
-#        condition: service_healthy
-#    environment:
-#      - REDIS_HOST=redis
-#      - REDIS_PORT=6379
-#      - JWT_SECRET_KEY=your-production-secret-key
-#      - LOG_LEVEL=INFO
-#    volumes:
-#      - ./app:/app/app:ro
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
 #
 #  nginx:
 #    image: nginx:alpine

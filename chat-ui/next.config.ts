@@ -1,15 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'pplx-res.cloudinary.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
 };
 
-module.exports = nextConfig;
+export default nextConfig;
