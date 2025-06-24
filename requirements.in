@@ -10,3 +10,4 @@ pytest-asyncio
 httpx
 websockets
 gunicorn
+prometheus_client

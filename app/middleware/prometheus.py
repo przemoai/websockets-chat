@@ -37,10 +37,8 @@ class PrometheusMiddleware(BaseHTTPMiddleware):
         endpoint = request.url.path
         method = request.method
 
-        # Call the next middleware/handler
         response = await call_next(request)
 
-        # Record metrics
         process_time = time.time() - start_time
         REQUEST_DURATION.labels(method=method, endpoint=endpoint).observe(process_time)
         REQUEST_COUNT.labels(

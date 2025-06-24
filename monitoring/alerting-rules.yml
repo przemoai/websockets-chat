@@ -1,0 +1,47 @@
+groups:
+  - name: websocket-service
+    rules:
+      - alert: HighErrorRate
+        expr: rate(fastapi_requests_total{status_code=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(fastapi_request_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }} seconds"
+
+      - alert: TooManyWebSocketConnections
+        expr: websocket_active_connections > 8000
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Too many WebSocket connections"
+          description: "Active WebSocket connections: {{ $value }}"
+
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"
+          description: "Redis instance is not responding"
+
+      - alert: ApplicationDown
+        expr: up{job="fastapi-websocket-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "FastAPI application is down"
+          description: "FastAPI WebSocket service is not responding"
