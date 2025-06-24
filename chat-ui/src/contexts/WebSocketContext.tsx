@@ -26,7 +26,7 @@ const WebSocketContext = createContext<WebSocketContextType | undefined>(undefin
 
 export function WebSocketProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState('');
-  const [wsUrl, setWsUrl] = useState('ws://localhost:8000/ws');
+  const [wsUrl, setWsUrl] = useState('ws://localhost/ws');
 
   const {
     isConnected,
